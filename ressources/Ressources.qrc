@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="icon-action-new">document-new.svg</file>
+        <file alias="icon-action-load">document-open.svg</file>
+        <file alias="icon-action-save">document-save.svg</file>
+        <!-- <file alias="icon-action-process">*.svg</file> -->
+        <file alias="icon-action-quit">system-log-out.svg</file>
+        <file alias="icon-action-documentation">x-office-address-book.svg</file>
+        <file alias="icon-action-about">help-browser.svg</file>
+    </qresource>
+</RCC>
