@@ -6,6 +6,7 @@
 //==============================================================================
 
 #include "Settings.h"
+#include <QStringList>
 
 Settings::Settings() :
         dataFilePath(QString()), mp3FilesDirPath(QString()), bitRate(192), encodeFiles(false),
@@ -150,28 +151,37 @@ bool Settings::equals(const Settings& settings) const
 
 void Settings::fromString(const QString& fromString, const QChar& sep)
 {
-    // TODO void Settings::fromString(const QString& fromString, const QChar& sep)
-    Q_UNUSED(fromString);
-    Q_UNUSED(sep);
+    const QStringList fromStringList = fromString.split(sep);
+    if (fromStringList.count() < 7)
+        return;
+    this->setDataFilePath(fromStringList.at(0));
+    this->setMP3FilesDirPath(fromStringList.at(1));
+    this->setBitRate(fromStringList.at(2).toInt());
+    this->setEncodeFiles((bool) fromStringList.at(3).toInt());
+    this->setClearMetadata((bool) fromStringList.at(4).toInt());
+    this->setWriteMetadata((bool) fromStringList.at(5).toInt());
+    this->setOrderFiles((bool) fromStringList.at(6).toInt());
 }
 
 const QString Settings::toString(const QChar& sep) const
 {
-    // TODO const QString Settings::toString(const QChar& sep) const
-    Q_UNUSED(sep);
-    return QString();
+    QString toString;
+    toString += this->getDataFilePath() + sep;
+    toString += this->getMP3FilesDirPath() + sep;
+    toString += QString::number(this->getBitRate()) + sep;
+    toString += QString::number((int) this->getEncodeFiles()) + sep;
+    toString += QString::number((int) this->getClearMetadata()) + sep;
+    toString += QString::number((int) this->getWriteMetadata()) + sep;
+    toString += QString::number((int) this->getOrderFiles());
+    return toString;
 }
 
 bool Settings::operator==(const Settings& settings) const
 {
-    // TODO bool Settings::operator==(const Settings& settings) const
-    Q_UNUSED(settings);
-    return false;
+    return this->equals(settings);
 }
 
 bool Settings::operator!=(const Settings& settings) const
 {
-    // TODO bool Settings::operator!=(const Settings& settings) const
-    Q_UNUSED(settings);
-    return false;
+    return !(this->equals(settings));
 }

@@ -6,6 +6,7 @@
 //==============================================================================
 
 #include "MP3File.h"
+#include <QStringList>
 
 MP3File::MP3File() :
         filePath(QString()), title(QString()), artist(QString()), albumArtist(QString()),
@@ -175,66 +176,73 @@ bool MP3File::equals(const MP3File& mp3File) const
 
 void MP3File::fromString(const QString& fromString, const QChar& sep)
 {
-    // TODO void MP3File::fromString(const QString& fromString, const QChar& sep)
-    Q_UNUSED(fromString);
-    Q_UNUSED(sep);
+    const QStringList fromStringList = fromString.split(sep);
+    if (fromStringList.count() < 9)
+        return;
+    this->setFilePath(fromStringList.at(0));
+    this->setTitle(fromStringList.at(1));
+    this->setArtist(fromStringList.at(2));
+    this->setAlbumArtist(fromStringList.at(3));
+    this->setAlbum(fromStringList.at(4));
+    this->setDateFromString(fromStringList.at(5));
+    this->setDiscFromString(fromStringList.at(6));
+    this->setTrackFromString(fromStringList.at(7));
+    this->setGenre(fromStringList.at(8));
 }
 
 const QString MP3File::toString(const QChar& sep) const
 {
-    // TODO const QString MP3File::toString(const QChar& sep) const
-    Q_UNUSED(sep);
-    return QString();
+    QString toString;
+    toString += this->getFilePath() + sep;
+    toString += this->getTitle() + sep;
+    toString += this->getArtist() + sep;
+    toString += this->getAlbumArtist() + sep;
+    toString += this->getAlbum() + sep;
+    toString += this->getDateToString() + sep;
+    toString += this->getDiscToString() + sep;
+    toString += this->getTrackToString() + sep;
+    toString += this->getGenre();
+    return toString;
 }
 
 bool MP3File::operator==(const MP3File& mp3File) const
 {
-    // TODO bool MP3File::operator==(const MP3File& mp3File) const
-    Q_UNUSED(mp3File);
-    return false;
+    return this->equals(mp3File);
 }
 
 bool MP3File::operator!=(const MP3File& mp3File) const
 {
-    // TODO bool MP3File::operator!=(const MP3File& mp3File) const
-    Q_UNUSED(mp3File);
-    return false;
+    return !(this->equals(mp3File));
 }
 
 const QString MP3File::getDateToString() const
 {
-    // TODO const QString MP3File::getDateToString() const
-    return QString();
+    return this->getDate().toString("dd/MM/yyyy");
 }
 
 const QString MP3File::getDiscToString() const
 {
-    // TODO const QString MP3File::getDiscToString() const
-    return QString();
+    return QString::number(this->getDisc());
 }
 
 const QString MP3File::getTrackToString() const
 {
-    // TODO const QString MP3File::getTrackToString() const
-    return QString();
+    return QString::number(this->getTrack());
 }
 
 void MP3File::setDateFromString(const QString& date)
 {
-    // TODO void MP3File::setDateFromString(const QString& date)
-    Q_UNUSED(date);
+    this->setDate(QDate::fromString(date, "dd/MM/yyyy"));
 }
 
 void MP3File::setDiscFromString(const QString& disc)
 {
-    // TODO void MP3File::setDiscFromString(const QString& disc)
-    Q_UNUSED(disc);
+    this->setDisc(disc.toInt());
 }
 
 void MP3File::setTrackFromString(const QString& track)
 {
-    // TODO void MP3File::setTrackFromString(const QString& track)
-    Q_UNUSED(track);
+    this->setTrack(track.toInt());
 }
 
 void MP3File::encodeFile(const int& bitRate) const
