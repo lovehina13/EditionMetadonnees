@@ -6,6 +6,9 @@
 //==============================================================================
 
 #include "MP3File.h"
+#include "Tools.h"
+#include <QDir>
+#include <QFile>
 #include <QStringList>
 
 MP3File::MP3File() :
@@ -247,23 +250,109 @@ void MP3File::setTrackFromString(const QString& track)
 
 void MP3File::encodeFile(const int& bitRate) const
 {
-    // TODO void MP3File::encodeFile(const int& bitRate) const*
-    Q_UNUSED(bitRate);
+    const QString& inFilePath = this->getFilePath();
+    const QString outFilePath = QString("%1.out.mp3").arg(inFilePath);
+    const QString command =
+            QString("ffmpeg -y -i \"%1\" -map 0:0 -c:a libmp3lame -b:a %2k \"%3\"").arg(inFilePath).arg(
+                    QString::number(bitRate)).arg(outFilePath);
+    executeCommand(command, true);
+    QFile::remove(inFilePath);
+    QFile::rename(outFilePath, inFilePath);
 }
 
 void MP3File::clearMetadata() const
 {
-    // TODO void MP3File::clearMetadata() const
+    const QString& inFilePath = this->getFilePath();
+    const QString outFilePath = QString("%1.out.mp3").arg(inFilePath);
+    const QString command = QString("ffmpeg -y -i \"%1\" -map_metadata -1 -c:a copy \"%2\"").arg(
+            inFilePath).arg(outFilePath);
+    executeCommand(command, true);
+    QFile::remove(inFilePath);
+    QFile::rename(outFilePath, inFilePath);
 }
 
 void MP3File::decodeMetadata()
 {
-    // TODO void MP3File::decodeMetadata()
+    const QString& inFilePath = this->getFilePath();
+    const QString outFilePath = QString("%1.out.txt").arg(inFilePath);
+    const QString command = QString("ffmpeg -y -i \"%1\" -f ffmetadata \"%2\"").arg(inFilePath).arg(
+            outFilePath);
+    executeCommand(command, true);
+
+    const QStringList lines = readFileLines(outFilePath);
+    const int nbLines = lines.count();
+    for (int itLine = 0; itLine < nbLines; itLine++)
+    {
+        const QString& line = lines.at(itLine);
+        QStringList lineItems = line.split("=");
+        if (lineItems.count() < 2)
+            continue;
+        const QString metadata = lineItems.takeFirst();
+        const QString value = lineItems.join("=");
+        if (metadata == QString("title"))
+        {
+            this->setTitle(value);
+        }
+        else if (metadata == QString("artist"))
+        {
+            this->setArtist(value);
+        }
+        else if (metadata == QString("album_artist"))
+        {
+            this->setAlbumArtist(value);
+        }
+        else if (metadata == QString("album"))
+        {
+            this->setAlbum(value);
+        }
+        else if (metadata == QString("date"))
+        {
+            this->setDateFromString(value);
+        }
+        else if (metadata == QString("disc"))
+        {
+            this->setDiscFromString(value);
+        }
+        else if (metadata == QString("track"))
+        {
+            this->setTrackFromString(value);
+        }
+        else if (metadata == QString("genre"))
+        {
+            this->setGenre(value);
+        }
+    }
+
+    QFile::remove(outFilePath);
 }
 
 void MP3File::encodeMetadata() const
 {
-    // TODO void MP3File::encodeMetadata() const
+    QString metadata;
+    if (!this->getTitle().isEmpty())
+        metadata += QString("-metadata title=\"%1\" ").arg(this->getTitle());
+    if (!this->getArtist().isEmpty())
+        metadata += QString("-metadata artist=\"%1\" ").arg(this->getArtist());
+    if (!this->getAlbumArtist().isEmpty())
+        metadata += QString("-metadata album_artist=\"%1\" ").arg(this->getAlbumArtist());
+    if (!this->getAlbum().isEmpty())
+        metadata += QString("-metadata album=\"%1\" ").arg(this->getAlbum());
+    if (this->getDate().isValid())
+        metadata += QString("-metadata date=\"%1\" ").arg(this->getDateToString());
+    if (this->getDisc())
+        metadata += QString("-metadata disc=\"%1\" ").arg(this->getDiscToString());
+    if (this->getTrack())
+        metadata += QString("-metadata track=\"%1\" ").arg(this->getTrackToString());
+    if (!this->getGenre().isEmpty())
+        metadata += QString("-metadata genre=\"%1\" ").arg(this->getGenre());
+
+    const QString& inFilePath = this->getFilePath();
+    const QString outFilePath = QString("%1.out.mp3").arg(inFilePath);
+    const QString command = QString("ffmpeg -y -i \"%1\" %2 -c:a copy \"%3\"").arg(inFilePath).arg(
+            metadata).arg(outFilePath);
+    executeCommand(command, true);
+    QFile::remove(inFilePath);
+    QFile::rename(outFilePath, inFilePath);
 }
 
 void MP3File::orderFile(const QString& dirPath)
