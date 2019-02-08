@@ -357,6 +357,17 @@ void MP3File::encodeMetadata() const
 
 void MP3File::orderFile(const QString& dirPath)
 {
-    // TODO void MP3File::orderFile(const QString& dirPath)
-    Q_UNUSED(dirPath);
+    const QString& inFilePath = this->getFilePath();
+    const QString& albumArtist = this->getAlbumArtist();
+    const QString& album = this->getAlbum();
+    const QString& title = this->getTitle();
+    const QString outDirPath = QString("%1/%2/%3").arg(dirPath).arg(albumArtist).arg(album);
+    const QString outFilePath = QString("%1/%2.mp3").arg(outDirPath).arg(title);
+
+    const QDir outDir(outDirPath);
+    if (!outDir.exists())
+    {
+        outDir.mkpath(outDirPath);
+    }
+    QFile::copy(inFilePath, outFilePath);
 }

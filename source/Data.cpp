@@ -212,6 +212,16 @@ void Data::encodeMetadata() const
 
 void Data::orderFiles(const QString& dirPath) const
 {
-    // TODO void Data::orderFiles(const QString& dirPath) const
-    Q_UNUSED(dirPath);
+    const QString outDirPath = QString("%1_out").arg(dirPath);
+
+    const QDir outDir(outDirPath);
+    outDir.rmpath(outDirPath);
+
+    const MP3FilesPtrList& mp3Files = this->getMP3Files();
+    const int nbMP3Files = mp3Files.count();
+    for (int itMP3File = 0; itMP3File < nbMP3Files; itMP3File++)
+    {
+        const MP3FilePtr mp3File = mp3Files.at(itMP3File);
+        mp3File->orderFile(outDirPath);
+    }
 }
