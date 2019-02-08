@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>818</width>
-    <height>659</height>
+    <height>685</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,13 +19,163 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayoutMainWindow">
-    <item row="0" column="0">
+    <item row="0" column="0" colspan="7">
      <widget class="QTableWidget" name="tableWidget">
       <property name="minimumSize">
        <size>
         <width>800</width>
         <height>600</height>
        </size>
+      </property>
+      <column>
+       <property name="text">
+        <string>Fichier</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Titre</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Artiste</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Artiste de l'album</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Album</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Date</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Disque</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Piste</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Genre</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLabel" name="labelBitRate">
+      <property name="text">
+       <string>Bit rate :</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QComboBox" name="comboBoxBitRate">
+      <property name="currentIndex">
+       <number>5</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>32 kbit/s</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>64 kbit/s</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>96 kbit/s</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>128 kbit/s</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>160 kbit/s</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>192 kbit/s</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>224 kbit/s</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>256 kbit/s</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>288 kbit/s</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>320 kbit/s</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QCheckBox" name="checkBoxEncodeFiles">
+      <property name="text">
+       <string>Re-encode files</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="4">
+     <widget class="QCheckBox" name="checkBoxClearMetadata">
+      <property name="text">
+       <string>Clear metadata</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="5">
+     <widget class="QCheckBox" name="checkBoxWriteMetadata">
+      <property name="text">
+       <string>Write metadata</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="6">
+     <widget class="QCheckBox" name="checkBoxOrderFiles">
+      <property name="text">
+       <string>Re-order files</string>
       </property>
      </widget>
     </item>
