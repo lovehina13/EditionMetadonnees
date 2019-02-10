@@ -93,4 +93,6 @@ typedef QMap<int, MP3FilePtr> MP3FilesPtrIdMap;
 typedef QMap<QString, MP3File> MP3FilesNamesMap;
 typedef QMap<QString, MP3FilePtr> MP3FilesPtrNamesMap;
 
+bool lessThanMP3File(const MP3FilePtr mp3File1, const MP3FilePtr mp3File2);
+
 #endif // MP3FILE_H

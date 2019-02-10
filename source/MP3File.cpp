@@ -371,3 +371,8 @@ void MP3File::orderFile(const QString& dirPath)
     }
     QFile::copy(inFilePath, outFilePath);
 }
+
+bool lessThanMP3File(const MP3FilePtr mp3File1, const MP3FilePtr mp3File2)
+{
+    return (mp3File1->getFilePath() < mp3File2->getFilePath());
+}

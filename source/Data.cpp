@@ -162,6 +162,7 @@ void Data::searchMP3Files()
         mp3File->decodeMetadata();
         mp3Files.append(mp3File);
     }
+    qSort(mp3Files.begin(), mp3Files.end(), lessThanMP3File);
     this->clearMP3Files();
     this->setMP3Files(mp3Files);
 }
