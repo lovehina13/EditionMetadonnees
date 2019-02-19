@@ -6,7 +6,10 @@
 //==============================================================================
 
 #include "Tools.h"
+#include <QDir>
 #include <QFile>
+#include <QFileInfo>
+#include <QFileInfoList>
 #include <QIODevice>
 #include <QProcess>
 #include <QTextStream>
@@ -55,4 +58,29 @@ void writeFileLines(const QString& filePath, const QStringList& lines)
         }
         file.close();
     }
+}
+
+void removeDirectory(const QString& dirPath)
+{
+    QDir dir(dirPath);
+
+    const QFileInfoList files = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
+    const int nbFiles = files.count();
+    for (int itFile = 0; itFile < nbFiles; itFile++)
+    {
+        const QFileInfo& file = files.at(itFile);
+        const QString filePath = file.absoluteFilePath();
+        QFile::remove(filePath);
+    }
+
+    const QFileInfoList dirs = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
+    const int nbDirs = dirs.count();
+    for (int itDir = 0; itDir < nbDirs; itDir++)
+    {
+        const QFileInfo& dir = dirs.at(itDir);
+        const QString dirPath = dir.absoluteFilePath();
+        removeDirectory(dirPath);
+    }
+
+    dir.rmdir(dirPath);
 }

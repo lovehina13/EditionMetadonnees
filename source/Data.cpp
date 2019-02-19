@@ -215,8 +215,7 @@ void Data::orderFiles(const QString& dirPath) const
 {
     const QString outDirPath = QString("%1_out").arg(dirPath);
 
-    const QDir outDir(outDirPath);
-    outDir.rmpath(outDirPath);
+    removeDirectory(outDirPath);
 
     const MP3FilesPtrList& mp3Files = this->getMP3Files();
     const int nbMP3Files = mp3Files.count();

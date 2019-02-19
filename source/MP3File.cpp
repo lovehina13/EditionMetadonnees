@@ -253,8 +253,8 @@ void MP3File::encodeFile(const int& bitRate) const
     const QString& inFilePath = this->getFilePath();
     const QString outFilePath = QString("%1.out.mp3").arg(inFilePath);
     const QString command =
-            QString("ffmpeg -y -i \"%1\" -map 0:0 -c:a libmp3lame -b:a %2k \"%3\"").arg(inFilePath).arg(
-                    QString::number(bitRate)).arg(outFilePath);
+            QString("ffmpeg -y -i \"%1\" -map 0:0 -c:a libmp3lame -b:a %2k \"%3\"").arg(inFilePath,
+                    QString::number(bitRate), outFilePath);
     executeCommand(command, true);
     QFile::remove(inFilePath);
     QFile::rename(outFilePath, inFilePath);
@@ -265,7 +265,7 @@ void MP3File::clearMetadata() const
     const QString& inFilePath = this->getFilePath();
     const QString outFilePath = QString("%1.out.mp3").arg(inFilePath);
     const QString command = QString("ffmpeg -y -i \"%1\" -map_metadata -1 -c:a copy \"%2\"").arg(
-            inFilePath).arg(outFilePath);
+            inFilePath, outFilePath);
     executeCommand(command, true);
     QFile::remove(inFilePath);
     QFile::rename(outFilePath, inFilePath);
@@ -275,7 +275,7 @@ void MP3File::decodeMetadata()
 {
     const QString& inFilePath = this->getFilePath();
     const QString outFilePath = QString("%1.out.txt").arg(inFilePath);
-    const QString command = QString("ffmpeg -y -i \"%1\" -f ffmetadata \"%2\"").arg(inFilePath).arg(
+    const QString command = QString("ffmpeg -y -i \"%1\" -f ffmetadata \"%2\"").arg(inFilePath,
             outFilePath);
     executeCommand(command, true);
 
@@ -348,8 +348,8 @@ void MP3File::encodeMetadata() const
 
     const QString& inFilePath = this->getFilePath();
     const QString outFilePath = QString("%1.out.mp3").arg(inFilePath);
-    const QString command = QString("ffmpeg -y -i \"%1\" %2 -c:a copy \"%3\"").arg(inFilePath).arg(
-            metadata).arg(outFilePath);
+    const QString command = QString("ffmpeg -y -i \"%1\" %2 -c:a copy \"%3\"").arg(inFilePath,
+            metadata, outFilePath);
     executeCommand(command, true);
     QFile::remove(inFilePath);
     QFile::rename(outFilePath, inFilePath);
@@ -361,8 +361,16 @@ void MP3File::orderFile(const QString& dirPath)
     const QString& albumArtist = this->getAlbumArtist();
     const QString& album = this->getAlbum();
     const QString& title = this->getTitle();
-    const QString outDirPath = QString("%1/%2/%3").arg(dirPath).arg(albumArtist).arg(album);
-    const QString outFilePath = QString("%1/%2.mp3").arg(outDirPath).arg(title);
+    const int& disc = this->getDisc();
+    const int& track = this->getTrack();
+    const QString number =
+            (disc && track) ?
+                    QString("%1-%2 - ").arg(QString::number(disc),
+                            QString::number(track).rightJustified(2, '0')) :
+            (track) ?
+                    QString("%1 - ").arg(QString::number(track).rightJustified(2, '0')) : QString();
+    const QString outDirPath = QString("%1/%2/%3").arg(dirPath, albumArtist, album);
+    const QString outFilePath = QString("%1/%2%3.mp3").arg(outDirPath, number, title);
 
     const QDir outDir(outDirPath);
     if (!outDir.exists())
