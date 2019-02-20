@@ -9,8 +9,11 @@
 #include "ui_MainWindow.h"
 #include "DocumentationWindow.h"
 #include "Settings.h"
+#include <QDate>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QString>
+#include <QStringList>
 
 MainWindow::MainWindow(QWidget* parent) :
         QMainWindow(parent), ui(new Ui::MainWindow)
@@ -112,21 +115,26 @@ void MainWindow::updateTableWidget()
 {
     this->clearTableWidget();
 
-    const MP3FilesPtrList& mp3Files = this->data.getMP3Files();
+    const MP3FilesPtrNamesMap& mp3Files = this->data.getMP3Files();
+    const QStringList mp3FilesPaths = mp3Files.keys();
     const int nbMP3Files = mp3Files.count();
     this->ui->tableWidget->setRowCount(nbMP3Files);
     for (int itMP3File = 0; itMP3File < nbMP3Files; itMP3File++)
     {
-        const MP3FilePtr mp3File = mp3Files.at(itMP3File);
+        const QString& mp3FilePath = mp3FilesPaths.at(itMP3File);
+        const MP3FilePtr mp3File = mp3Files.value(mp3FilePath);
         QTableWidgetItem* filePathItem = new QTableWidgetItem(mp3File->getFilePath());
         QTableWidgetItem* titleItem = new QTableWidgetItem(mp3File->getTitle());
         QTableWidgetItem* artistItem = new QTableWidgetItem(mp3File->getArtist());
         QTableWidgetItem* albumArtistItem = new QTableWidgetItem(mp3File->getAlbumArtist());
         QTableWidgetItem* albumItem = new QTableWidgetItem(mp3File->getAlbum());
-        QTableWidgetItem* dateItem = new QTableWidgetItem(mp3File->getDateToString());
-        QTableWidgetItem* discItem = new QTableWidgetItem(mp3File->getDiscToString());
-        QTableWidgetItem* trackItem = new QTableWidgetItem(mp3File->getTrackToString());
+        QTableWidgetItem* dateItem = new QTableWidgetItem(/*mp3File->getDateToString()*/);
+        QTableWidgetItem* discItem = new QTableWidgetItem(/*mp3File->getDiscToString()*/);
+        QTableWidgetItem* trackItem = new QTableWidgetItem(/*mp3File->getTrackToString()*/);
         QTableWidgetItem* genreItem = new QTableWidgetItem(mp3File->getGenre());
+        dateItem->setData(Qt::DisplayRole, mp3File->getDate());
+        discItem->setData(Qt::DisplayRole, mp3File->getDisc());
+        trackItem->setData(Qt::DisplayRole, mp3File->getTrack());
         this->ui->tableWidget->setItem(itMP3File, C_FILE_PATH, filePathItem);
         this->ui->tableWidget->setItem(itMP3File, C_TITLE, titleItem);
         this->ui->tableWidget->setItem(itMP3File, C_ARTIST, artistItem);
@@ -151,41 +159,42 @@ void MainWindow::updateSettings()
     this->ui->checkBoxOrderFiles->setChecked(settings.getOrderFiles());
 }
 
-void MainWindow::updateMP3File(const int& item, const int& metadata, const QString& value)
+void MainWindow::updateMP3File(const int& item, const int& metadata, const QVariant& value)
 {
-    const MP3FilesPtrList& mp3Files = this->data.getMP3Files();
-    const MP3FilePtr mp3File = mp3Files.at(item);
+    const MP3FilesPtrNamesMap& mp3Files = this->data.getMP3Files();
+    const QString mp3FilePath = this->ui->tableWidget->item(item, C_FILE_PATH)->text();
+    const MP3FilePtr mp3File = mp3Files.value(mp3FilePath);
     if (metadata == C_TITLE)
     {
-        mp3File->setTitle(value);
+        mp3File->setTitle(value.toString());
     }
     else if (metadata == C_ARTIST)
     {
-        mp3File->setArtist(value);
+        mp3File->setArtist(value.toString());
     }
     else if (metadata == C_ALBUM_ARTIST)
     {
-        mp3File->setAlbumArtist(value);
+        mp3File->setAlbumArtist(value.toString());
     }
     else if (metadata == C_ALBUM)
     {
-        mp3File->setAlbum(value);
+        mp3File->setAlbum(value.toString());
     }
     else if (metadata == C_DATE)
     {
-        mp3File->setDateFromString(value);
+        mp3File->setDate(value.toDate());
     }
     else if (metadata == C_DISC)
     {
-        mp3File->setDiscFromString(value);
+        mp3File->setDisc(value.toInt());
     }
     else if (metadata == C_TRACK)
     {
-        mp3File->setTrackFromString(value);
+        mp3File->setTrack(value.toInt());
     }
     else if (metadata == C_GENRE)
     {
-        mp3File->setGenre(value);
+        mp3File->setGenre(value.toString());
     }
 }
 
@@ -234,7 +243,14 @@ void MainWindow::on_tableWidget_itemChanged(QTableWidgetItem* item)
 {
     const int row = item->row();
     const int column = item->column();
-    const QString value = item->text();
+    const QVariant value = item->data(Qt::DisplayRole);
+
+    // Note: Fix to prevent automatic conversion to QDateTime after user input
+    if (value.type() == QVariant::DateTime)
+    {
+        item->setData(Qt::DisplayRole, QDate());
+        item->setData(Qt::DisplayRole, value.toDate());
+    }
 
     this->updateMP3File(row, column, value);
 

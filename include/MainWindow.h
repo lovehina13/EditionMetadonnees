@@ -10,8 +10,8 @@
 
 #include "Data.h"
 #include <QMainWindow>
-#include <QString>
 #include <QTableWidgetItem>
+#include <QVariant>
 #include <QWidget>
 
 namespace Ui
@@ -35,7 +35,7 @@ protected:
     void clearTableWidget();
     void updateTableWidget();
     void updateSettings();
-    void updateMP3File(const int& item, const int& metadata, const QString& value);
+    void updateMP3File(const int& item, const int& metadata, const QVariant& value);
 
 protected slots:
     void on_actionNew_triggered();

@@ -20,21 +20,21 @@ class Data
 public:
     // Constructors and destructors
     Data();
-    Data(const Settings& settings, const MP3FilesPtrList& mp3Files);
+    Data(const Settings& settings, const MP3FilesPtrNamesMap& mp3Files);
     Data(const Data& data);
     virtual ~Data();
 
     // Getters
     const Settings& getSettings() const;
-    const MP3FilesPtrList& getMP3Files() const;
+    const MP3FilesPtrNamesMap& getMP3Files() const;
 
     // Setters
     void setSettings(const Settings& settings);
-    void setMP3Files(const MP3FilesPtrList& mp3Files);
+    void setMP3Files(const MP3FilesPtrNamesMap& mp3Files);
 
     // Generic methods
     void clear();
-    void set(const Settings& settings, const MP3FilesPtrList& mp3Files);
+    void set(const Settings& settings, const MP3FilesPtrNamesMap& mp3Files);
     void copy(const Data& data);
     bool equals(const Data& data) const;
     void fromString(const QString& fromString, const QChar& sep);
@@ -54,7 +54,7 @@ public:
 private:
     // Class members
     Settings settings;
-    MP3FilesPtrList mp3Files;
+    MP3FilesPtrNamesMap mp3Files;
 };
 
 typedef Data* DataPtr;
