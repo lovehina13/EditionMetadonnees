@@ -20,7 +20,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayoutMainWindow">
     <item row="0" column="0" colspan="7">
-     <widget class="QTableWidget" name="tableWidget">
+     <widget class="QTableWidgetImproved" name="tableWidget">
       <property name="minimumSize">
        <size>
         <width>800</width>
@@ -300,6 +300,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QTableWidgetImproved</class>
+   <extends>QTableWidget</extends>
+   <header>QTableWidgetImproved.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../ressources/Ressources.qrc"/>
  </resources>

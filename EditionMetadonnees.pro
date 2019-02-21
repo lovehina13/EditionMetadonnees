@@ -18,6 +18,7 @@ HEADERS += include/Data.h \
            include/DocumentationWindow.h \
            include/MainWindow.h \
            include/MP3File.h \
+           include/QTableWidgetImproved.h \
            include/Settings.h \
            include/Tools.h
 SOURCES += source/EditionMetadonnees.cpp \
@@ -25,6 +26,7 @@ SOURCES += source/EditionMetadonnees.cpp \
            source/DocumentationWindow.cpp \
            source/MainWindow.cpp \
            source/MP3File.cpp \
+           source/QTableWidgetImproved.cpp \
            source/Settings.cpp \
            source/Tools.cpp
 FORMS += interfaces/DocumentationWindow.ui \
