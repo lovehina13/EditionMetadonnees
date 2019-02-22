@@ -1,7 +1,7 @@
 #===============================================================================
 # Name        : EditionMetadonnees.pro
 # Author      : Alexis Foerster (alexis.foerster@gmail.com)
-# Version     : 1.0.0 (01/02/2019)
+# Version     : 1.0.0 (22/02/2019)
 # Description : Qt project file of the EditionMetadonnees project
 #===============================================================================
 

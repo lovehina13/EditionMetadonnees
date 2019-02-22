@@ -1,7 +1,7 @@
 //==============================================================================
 // Name        : MainWindow.cpp
 // Author      : Alexis Foerster (alexis.foerster@gmail.com)
-// Version     : 1.0.0 (01/02/2019)
+// Version     : 1.0.0 (22/02/2019)
 // Description : Source file of the MainWindow class
 //==============================================================================
 
@@ -233,7 +233,7 @@ void MainWindow::on_actionAbout_triggered()
 {
     QMessageBox* messageBox = new QMessageBox(QMessageBox::Information,
             QString::fromUtf8("EditionMetadonnees"),
-            QString::fromUtf8("EditionMetadonnees - Version 1.0.0 (01/02/2019).\n"
+            QString::fromUtf8("EditionMetadonnees - Version 1.0.0 (22/02/2019).\n"
                     "Réalisée par Alexis Foerster (alexis.foerster@gmail.com)."), QMessageBox::Ok,
             this);
     messageBox->exec();
@@ -245,7 +245,7 @@ void MainWindow::on_tableWidget_itemChanged(QTableWidgetItem* item)
     const int column = item->column();
     const QVariant value = item->data(Qt::DisplayRole);
 
-    // Note: Fix to prevent automatic conversion to QDateTime after user input
+    // Note: fix to prevent automatic conversion to QDateTime after user input
     if (value.type() == QVariant::DateTime)
     {
         item->setData(Qt::DisplayRole, QDate());

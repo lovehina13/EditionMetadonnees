@@ -1,7 +1,7 @@
 //==============================================================================
 // Name        : DocumentationWindow.h
 // Author      : Alexis Foerster (alexis.foerster@gmail.com)
-// Version     : 1.0.0 (01/02/2019)
+// Version     : 1.0.0 (22/02/2019)
 // Description : Header file of the DocumentationWindow class
 //==============================================================================
 

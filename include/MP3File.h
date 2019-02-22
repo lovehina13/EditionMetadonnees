@@ -1,7 +1,7 @@
 //==============================================================================
 // Name        : MP3File.h
 // Author      : Alexis Foerster (alexis.foerster@gmail.com)
-// Version     : 1.0.0 (01/02/2019)
+// Version     : 1.0.0 (22/02/2019)
 // Description : Header file of the MP3File class
 //==============================================================================
 
@@ -93,4 +93,4 @@ typedef QMap<int, MP3FilePtr> MP3FilesPtrIdMap;
 typedef QMap<QString, MP3File> MP3FilesNamesMap;
 typedef QMap<QString, MP3FilePtr> MP3FilesPtrNamesMap;
 
-#endif // MP3FILE_H
+#endif /* MP3FILE_H */

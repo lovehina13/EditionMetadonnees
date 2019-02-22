@@ -1,7 +1,7 @@
 //==============================================================================
 // Name        : Settings.h
 // Author      : Alexis Foerster (alexis.foerster@gmail.com)
-// Version     : 1.0.0 (01/02/2019)
+// Version     : 1.0.0 (22/02/2019)
 // Description : Header file of the Settings class
 //==============================================================================
 
@@ -75,4 +75,4 @@ typedef QMap<int, SettingsPtr> SettingsPtrIdMap;
 typedef QMap<QString, Settings> SettingsNamesMap;
 typedef QMap<QString, SettingsPtr> SettingsPtrNamesMap;
 
-#endif // SETTINGS_H
+#endif /* SETTINGS_H */
