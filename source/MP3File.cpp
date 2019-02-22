@@ -220,7 +220,7 @@ bool MP3File::operator!=(const MP3File& mp3File) const
 
 const QString MP3File::getDateToString() const
 {
-    return this->getDate().toString("dd/MM/yyyy");
+    return this->getDate().toString("yyyy-MM-dd");
 }
 
 const QString MP3File::getDiscToString() const
@@ -235,7 +235,7 @@ const QString MP3File::getTrackToString() const
 
 void MP3File::setDateFromString(const QString& date)
 {
-    this->setDate(QDate::fromString(date, "dd/MM/yyyy"));
+    this->setDate(QDate::fromString(date, "yyyy-MM-dd"));
 }
 
 void MP3File::setDiscFromString(const QString& disc)
@@ -330,21 +330,21 @@ void MP3File::encodeMetadata() const
 {
     QString metadata;
     if (!this->getTitle().isEmpty())
-        metadata += QString("-metadata title=\"%1\" ").arg(this->getTitle());
+        metadata += QString("-metadata TIT2=\"%1\" ").arg(this->getTitle());
     if (!this->getArtist().isEmpty())
-        metadata += QString("-metadata artist=\"%1\" ").arg(this->getArtist());
+        metadata += QString("-metadata TPE1=\"%1\" ").arg(this->getArtist());
     if (!this->getAlbumArtist().isEmpty())
-        metadata += QString("-metadata album_artist=\"%1\" ").arg(this->getAlbumArtist());
+        metadata += QString("-metadata TPE2=\"%1\" ").arg(this->getAlbumArtist());
     if (!this->getAlbum().isEmpty())
-        metadata += QString("-metadata album=\"%1\" ").arg(this->getAlbum());
+        metadata += QString("-metadata TALB=\"%1\" ").arg(this->getAlbum());
     if (this->getDate().isValid())
-        metadata += QString("-metadata date=\"%1\" ").arg(this->getDateToString());
+        metadata += QString("-metadata TDRC=\"%1\" ").arg(this->getDateToString());
     if (this->getDisc())
-        metadata += QString("-metadata disc=\"%1\" ").arg(this->getDiscToString());
+        metadata += QString("-metadata TPOS=\"%1\" ").arg(this->getDiscToString());
     if (this->getTrack())
-        metadata += QString("-metadata track=\"%1\" ").arg(this->getTrackToString());
+        metadata += QString("-metadata TRCK=\"%1\" ").arg(this->getTrackToString());
     if (!this->getGenre().isEmpty())
-        metadata += QString("-metadata genre=\"%1\" ").arg(this->getGenre());
+        metadata += QString("-metadata TCON=\"%1\" ").arg(this->getGenre());
 
     const QString& inFilePath = this->getFilePath();
     const QString outFilePath = QString("%1.out.mp3").arg(inFilePath);
