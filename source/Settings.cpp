@@ -1,7 +1,7 @@
 //==============================================================================
 // Name        : Settings.cpp
 // Author      : Alexis Foerster (alexis.foerster@gmail.com)
-// Version     : 1.0.0 (22/02/2019)
+// Version     : 1.0.1 (05/04/2019)
 // Description : Source file of the Settings class
 //==============================================================================
 
