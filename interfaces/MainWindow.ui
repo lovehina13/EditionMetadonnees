@@ -17,7 +17,7 @@
    <iconset resource="../ressources/Ressources.qrc">
     <normaloff>:/icons/icon-edition-metadonnees</normaloff>:/icons/icon-edition-metadonnees</iconset>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayoutMainWindow">
     <item row="0" column="0" colspan="7">
      <widget class="QTableWidgetImproved" name="tableWidget">
