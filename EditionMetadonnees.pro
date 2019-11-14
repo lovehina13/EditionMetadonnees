@@ -34,4 +34,4 @@ FORMS += interfaces/DocumentationWindow.ui \
 RESOURCES += ressources/Ressources.qrc
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra
-# QMAKE_CXXFLAGS += -std=c++11 -pedantic -pedantic-errors -Wall -Wextra -Wconversion -Wsign-conversion -Wunused-parameter -Werror
+# QMAKE_CXXFLAGS += -std=c++11 -pedantic -pedantic-errors -Wall -Wextra -Wconversion -Wsign-conversion -Wold-style-cast -Wunused-parameter -Werror
