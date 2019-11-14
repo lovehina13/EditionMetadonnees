@@ -157,10 +157,10 @@ void Settings::fromString(const QString& fromString, const QChar& sep)
     this->setDataFilePath(fromStringList.at(0));
     this->setMP3FilesDirPath(fromStringList.at(1));
     this->setBitRate(fromStringList.at(2).toInt());
-    this->setEncodeFiles((bool) fromStringList.at(3).toInt());
-    this->setClearMetadata((bool) fromStringList.at(4).toInt());
-    this->setWriteMetadata((bool) fromStringList.at(5).toInt());
-    this->setOrderFiles((bool) fromStringList.at(6).toInt());
+    this->setEncodeFiles(static_cast<bool>(fromStringList.at(3).toInt()));
+    this->setClearMetadata(static_cast<bool>(fromStringList.at(4).toInt()));
+    this->setWriteMetadata(static_cast<bool>(fromStringList.at(5).toInt()));
+    this->setOrderFiles(static_cast<bool>(fromStringList.at(6).toInt()));
 }
 
 const QString Settings::toString(const QChar& sep) const
@@ -169,10 +169,10 @@ const QString Settings::toString(const QChar& sep) const
     toString += this->getDataFilePath() + sep;
     toString += this->getMP3FilesDirPath() + sep;
     toString += QString::number(this->getBitRate()) + sep;
-    toString += QString::number((int) this->getEncodeFiles()) + sep;
-    toString += QString::number((int) this->getClearMetadata()) + sep;
-    toString += QString::number((int) this->getWriteMetadata()) + sep;
-    toString += QString::number((int) this->getOrderFiles());
+    toString += QString::number(static_cast<int>(this->getEncodeFiles())) + sep;
+    toString += QString::number(static_cast<int>(this->getClearMetadata())) + sep;
+    toString += QString::number(static_cast<int>(this->getWriteMetadata())) + sep;
+    toString += QString::number(static_cast<int>(this->getOrderFiles()));
     return toString;
 }
 
