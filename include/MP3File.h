@@ -1,7 +1,7 @@
 //==============================================================================
 // Name        : MP3File.h
 // Author      : Alexis Foerster (alexis.foerster@gmail.com)
-// Version     : 1.0.1 (05/04/2019)
+// Version     : 1.0.2 (14/11/2019)
 // Description : Header file of the MP3File class
 //==============================================================================
 
