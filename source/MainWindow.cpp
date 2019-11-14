@@ -8,7 +8,11 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "DocumentationWindow.h"
+#include "MP3File.h"
+#include "QTableWidgetImproved.h"
 #include "Settings.h"
+#include <QCheckBox>
+#include <QComboBox>
 #include <QDate>
 #include <QFileDialog>
 #include <QMessageBox>
