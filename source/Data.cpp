@@ -34,6 +34,22 @@ Data::~Data()
     this->clearMP3Files();
 }
 
+Data& Data::operator=(const Data& data)
+{
+    this->copy(data);
+    return *this;
+}
+
+bool Data::operator==(const Data& data) const
+{
+    return this->equals(data);
+}
+
+bool Data::operator!=(const Data& data) const
+{
+    return !this->equals(data);
+}
+
 const Settings& Data::getSettings() const
 {
     return this->settings;

@@ -24,6 +24,11 @@ public:
     Settings(const Settings& settings);
     virtual ~Settings();
 
+    // Operators
+    Settings& operator=(const Settings& settings);
+    bool operator==(const Settings& settings) const;
+    bool operator!=(const Settings& settings) const;
+
     // Getters
     const QString& getDataFilePath() const;
     const QString& getMP3FilesDirPath() const;
@@ -51,10 +56,6 @@ public:
     bool equals(const Settings& settings) const;
     void fromString(const QString& fromString, const QChar& sep);
     const QString toString(const QChar& sep) const;
-
-    // Specific methods
-    bool operator==(const Settings& settings) const;
-    bool operator!=(const Settings& settings) const;
 
 private:
     // Class members

@@ -35,6 +35,22 @@ Settings::~Settings()
 
 }
 
+Settings& Settings::operator=(const Settings& settings)
+{
+    this->copy(settings);
+    return *this;
+}
+
+bool Settings::operator==(const Settings& settings) const
+{
+    return this->equals(settings);
+}
+
+bool Settings::operator!=(const Settings& settings) const
+{
+    return !this->equals(settings);
+}
+
 const QString& Settings::getDataFilePath() const
 {
     return this->dataFilePath;
@@ -174,14 +190,4 @@ const QString Settings::toString(const QChar& sep) const
     toString += QString::number(static_cast<int>(this->getWriteMetadata())) + sep;
     toString += QString::number(static_cast<int>(this->getOrderFiles()));
     return toString;
-}
-
-bool Settings::operator==(const Settings& settings) const
-{
-    return this->equals(settings);
-}
-
-bool Settings::operator!=(const Settings& settings) const
-{
-    return !(this->equals(settings));
 }

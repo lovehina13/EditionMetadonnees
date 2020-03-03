@@ -37,6 +37,22 @@ MP3File::~MP3File()
 
 }
 
+MP3File& MP3File::operator=(const MP3File& mp3File)
+{
+    this->copy(mp3File);
+    return *this;
+}
+
+bool MP3File::operator==(const MP3File& mp3File) const
+{
+    return this->equals(mp3File);
+}
+
+bool MP3File::operator!=(const MP3File& mp3File) const
+{
+    return !this->equals(mp3File);
+}
+
 const QString& MP3File::getFilePath() const
 {
     return this->filePath;
@@ -206,16 +222,6 @@ const QString MP3File::toString(const QChar& sep) const
     toString += this->getTrackToString() + sep;
     toString += this->getGenre();
     return toString;
-}
-
-bool MP3File::operator==(const MP3File& mp3File) const
-{
-    return this->equals(mp3File);
-}
-
-bool MP3File::operator!=(const MP3File& mp3File) const
-{
-    return !(this->equals(mp3File));
 }
 
 const QString MP3File::getDateToString() const

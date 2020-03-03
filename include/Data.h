@@ -24,6 +24,11 @@ public:
     Data(const Data& data);
     virtual ~Data();
 
+    // Operators
+    Data& operator=(const Data& data);
+    bool operator==(const Data& data) const;
+    bool operator!=(const Data& data) const;
+
     // Getters
     const Settings& getSettings() const;
     const MP3FilesPtrNamesMap& getMP3Files() const;

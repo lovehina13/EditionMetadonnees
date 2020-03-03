@@ -25,6 +25,11 @@ public:
     MP3File(const MP3File& mp3File);
     virtual ~MP3File();
 
+    // Operators
+    MP3File& operator=(const MP3File& mp3File);
+    bool operator==(const MP3File& mp3File) const;
+    bool operator!=(const MP3File& mp3File) const;
+
     // Getters
     const QString& getFilePath() const;
     const QString& getTitle() const;
@@ -58,8 +63,6 @@ public:
     const QString toString(const QChar& sep) const;
 
     // Specific methods
-    bool operator==(const MP3File& mp3File) const;
-    bool operator!=(const MP3File& mp3File) const;
     const QString getDateToString() const;
     const QString getDiscToString() const;
     const QString getTrackToString() const;
