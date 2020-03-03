@@ -17,7 +17,7 @@ class QTableWidgetImproved : public QTableWidget
     Q_OBJECT
 
 public:
-    explicit QTableWidgetImproved(QWidget* parent = NULL);
+    explicit QTableWidgetImproved(QWidget* parent = nullptr);
     virtual ~QTableWidgetImproved();
 
 protected:
