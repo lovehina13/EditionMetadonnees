@@ -77,9 +77,9 @@ void removeDirectory(const QString& dirPath)
     const int nbDirs = dirs.count();
     for (int itDir = 0; itDir < nbDirs; itDir++)
     {
-        const QFileInfo& dir = dirs.at(itDir);
-        const QString dirPath = dir.absoluteFilePath();
-        removeDirectory(dirPath);
+        const QFileInfo& subDir = dirs.at(itDir);
+        const QString subDirPath = subDir.absoluteFilePath();
+        removeDirectory(subDirPath);
     }
 
     dir.rmdir(dirPath);
