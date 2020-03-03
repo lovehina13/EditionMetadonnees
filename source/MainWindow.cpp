@@ -237,7 +237,7 @@ void MainWindow::on_actionAbout_triggered()
 {
     QMessageBox* messageBox = new QMessageBox(QMessageBox::Information,
             QString::fromUtf8("EditionMetadonnees"),
-            QString::fromUtf8("EditionMetadonnees - Version 1.0.0 (22/02/2019).\n"
+            QString::fromUtf8("EditionMetadonnees - Version 1.0.2 (14/11/2019).\n"
                     "Réalisée par Alexis Foerster (alexis.foerster@gmail.com)."), QMessageBox::Ok,
             this);
     messageBox->exec();
