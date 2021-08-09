@@ -77,15 +77,15 @@ public:
 
 private:
     // Class members
-    QString filePath;
-    QString title;
-    QString artist;
-    QString albumArtist;
-    QString album;
-    QDate date;
-    int disc;
-    int track;
-    QString genre;
+    QString _filePath;
+    QString _title;
+    QString _artist;
+    QString _albumArtist;
+    QString _album;
+    QDate _date;
+    int _disc;
+    int _track;
+    QString _genre;
 };
 
 typedef MP3File* MP3FilePtr;

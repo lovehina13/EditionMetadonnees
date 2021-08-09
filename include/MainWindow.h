@@ -53,8 +53,8 @@ protected slots:
     void on_checkBoxOrderFiles_stateChanged();
 
 private:
-    Ui::MainWindow* ui;
-    Data data;
+    Ui::MainWindow* _ui;
+    Data _data;
 
     enum tableWidgetColumns
     {

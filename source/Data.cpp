@@ -12,85 +12,85 @@
 #include <QStringList>
 
 Data::Data() :
-        settings(Settings()), mp3Files(MP3FilesPtrNamesMap())
+        _settings(Settings()), _mp3Files(MP3FilesPtrNamesMap())
 {
-    this->clear();
+    clear();
 }
 
 Data::Data(const Settings& settings, const MP3FilesPtrNamesMap& mp3Files) :
         Data()
 {
-    this->set(settings, mp3Files);
+    set(settings, mp3Files);
 }
 
 Data::Data(const Data& data) :
         Data()
 {
-    this->copy(data);
+    copy(data);
 }
 
 Data::~Data()
 {
-    this->clearMP3Files();
+    clearMP3Files();
 }
 
 Data& Data::operator=(const Data& data)
 {
-    this->copy(data);
+    copy(data);
     return *this;
 }
 
 bool Data::operator==(const Data& data) const
 {
-    return this->equals(data);
+    return equals(data);
 }
 
 bool Data::operator!=(const Data& data) const
 {
-    return !this->equals(data);
+    return !equals(data);
 }
 
 const Settings& Data::getSettings() const
 {
-    return this->settings;
+    return _settings;
 }
 
 const MP3FilesPtrNamesMap& Data::getMP3Files() const
 {
-    return this->mp3Files;
+    return _mp3Files;
 }
 
 void Data::setSettings(const Settings& settings)
 {
-    this->settings = settings;
+    _settings = settings;
 }
 
 void Data::setMP3Files(const MP3FilesPtrNamesMap& mp3Files)
 {
-    this->mp3Files = mp3Files;
+    _mp3Files = mp3Files;
 }
 
 void Data::clear()
 {
-    this->set(Settings(), MP3FilesPtrNamesMap());
+    set(Settings(), MP3FilesPtrNamesMap());
 }
 
 void Data::set(const Settings& settings, const MP3FilesPtrNamesMap& mp3Files)
 {
-    this->setSettings(settings);
-    this->setMP3Files(mp3Files);
+    setSettings(settings);
+    setMP3Files(mp3Files);
 }
 
 void Data::copy(const Data& data)
 {
-    this->set(data.getSettings(), data.getMP3Files());
+    set(data.getSettings(), data.getMP3Files());
 }
 
 bool Data::equals(const Data& data) const
 {
-    if (this->getSettings() != data.getSettings())
+    if (getSettings() != data.getSettings())
         return false;
-    if (this->getMP3Files() != data.getMP3Files())
+    if (getMP3Files() != data.getMP3Files())
         return false;
     return true;
 }
@@ -119,9 +119,9 @@ void Data::loadData(const QString& filePath)
         const QString& line = lines.at(itLine);
         if (itLine == 0)
         {
-            Settings settings = this->getSettings();
+            Settings settings = getSettings();
             settings.fromString(line, QChar(';'));
-            this->setSettings(settings);
+            setSettings(settings);
         }
         else
         {
@@ -130,19 +130,19 @@ void Data::loadData(const QString& filePath)
             mp3Files.insert(mp3File->getFilePath(), mp3File);
         }
     }
-    this->clearMP3Files();
-    this->setMP3Files(mp3Files);
+    clearMP3Files();
+    setMP3Files(mp3Files);
 }
 
 void Data::saveData(const QString& filePath)
 {
-    Settings settings = this->getSettings();
+    Settings settings = getSettings();
     settings.setDataFilePath(filePath);
-    this->setSettings(settings);
+    setSettings(settings);
 
     QStringList lines;
     lines.append(settings.toString(QChar(';')));
-    const MP3FilesPtrNamesMap& mp3Files = this->getMP3Files();
+    const MP3FilesPtrNamesMap& mp3Files = getMP3Files();
     const QStringList mp3FilesPaths = mp3Files.keys();
     const int nbMP3Files = mp3Files.count();
     for (int itMP3File = 0; itMP3File < nbMP3Files; itMP3File++)
@@ -156,7 +156,7 @@ void Data::saveData(const QString& filePath)
 
 void Data::clearMP3Files()
 {
-    const MP3FilesPtrNamesMap& mp3Files = this->getMP3Files();
+    const MP3FilesPtrNamesMap& mp3Files = getMP3Files();
     const QStringList mp3FilesPaths = mp3Files.keys();
     const int nbMP3Files = mp3Files.count();
     for (int itMP3File = 0; itMP3File < nbMP3Files; itMP3File++)
@@ -170,7 +170,7 @@ void Data::clearMP3Files()
 void Data::searchMP3Files()
 {
     MP3FilesPtrNamesMap mp3Files;
-    const Settings& settings = this->getSettings();
+    const Settings& settings = getSettings();
     const QString& mp3FilesDirPath = settings.getMP3FilesDirPath();
     QDirIterator mp3FilesPaths(mp3FilesDirPath, QStringList() << "*.mp3", QDir::Files,
             QDirIterator::Subdirectories);
@@ -182,13 +182,13 @@ void Data::searchMP3Files()
         mp3File->decodeMetadata();
         mp3Files.insert(mp3File->getFilePath(), mp3File);
     }
-    this->clearMP3Files();
-    this->setMP3Files(mp3Files);
+    clearMP3Files();
+    setMP3Files(mp3Files);
 }
 
 void Data::encodeFiles(const int& bitRate) const
 {
-    const MP3FilesPtrNamesMap& mp3Files = this->getMP3Files();
+    const MP3FilesPtrNamesMap& mp3Files = getMP3Files();
     const QStringList mp3FilesPaths = mp3Files.keys();
     const int nbMP3Files = mp3Files.count();
     for (int itMP3File = 0; itMP3File < nbMP3Files; itMP3File++)
@@ -201,7 +201,7 @@ void Data::encodeFiles(const int& bitRate) const
 
 void Data::clearMetadata() const
 {
-    const MP3FilesPtrNamesMap& mp3Files = this->getMP3Files();
+    const MP3FilesPtrNamesMap& mp3Files = getMP3Files();
     const QStringList mp3FilesPaths = mp3Files.keys();
     const int nbMP3Files = mp3Files.count();
     for (int itMP3File = 0; itMP3File < nbMP3Files; itMP3File++)
@@ -214,7 +214,7 @@ void Data::clearMetadata() const
 
 void Data::decodeMetadata() const
 {
-    const MP3FilesPtrNamesMap& mp3Files = this->getMP3Files();
+    const MP3FilesPtrNamesMap& mp3Files = getMP3Files();
     const QStringList mp3FilesPaths = mp3Files.keys();
     const int nbMP3Files = mp3Files.count();
     for (int itMP3File = 0; itMP3File < nbMP3Files; itMP3File++)
@@ -227,7 +227,7 @@ void Data::decodeMetadata() const
 
 void Data::encodeMetadata() const
 {
-    const MP3FilesPtrNamesMap& mp3Files = this->getMP3Files();
+    const MP3FilesPtrNamesMap& mp3Files = getMP3Files();
     const QStringList mp3FilesPaths = mp3Files.keys();
     const int nbMP3Files = mp3Files.count();
     for (int itMP3File = 0; itMP3File < nbMP3Files; itMP3File++)
@@ -244,7 +244,7 @@ void Data::orderFiles(const QString& dirPath) const
 
     removeDirectory(outDirPath);
 
-    const MP3FilesPtrNamesMap& mp3Files = this->getMP3Files();
+    const MP3FilesPtrNamesMap& mp3Files = getMP3Files();
     const QStringList mp3FilesPaths = mp3Files.keys();
     const int nbMP3Files = mp3Files.count();
     for (int itMP3File = 0; itMP3File < nbMP3Files; itMP3File++)

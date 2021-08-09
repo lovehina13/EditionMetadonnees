@@ -9,10 +9,10 @@
 #include <QStringList>
 
 Settings::Settings() :
-        dataFilePath(QString()), mp3FilesDirPath(QString()), bitRate(192), encodeFiles(false),
-                clearMetadata(false), writeMetadata(false), orderFiles(false)
+        _dataFilePath(QString()), _mp3FilesDirPath(QString()), _bitRate(192), _encodeFiles(false),
+                _clearMetadata(false), _writeMetadata(false), _orderFiles(false)
 {
-    this->clear();
+    clear();
 }
 
 Settings::Settings(const QString& dataFilePath, const QString& mp3FilesDirPath, const int& bitRate,
@@ -20,14 +20,14 @@ Settings::Settings(const QString& dataFilePath, const QString& mp3FilesDirPath, 
         const bool& orderFiles) :
         Settings()
 {
-    this->set(dataFilePath, mp3FilesDirPath, bitRate, encodeFiles, clearMetadata, writeMetadata,
+    set(dataFilePath, mp3FilesDirPath, bitRate, encodeFiles, clearMetadata, writeMetadata,
             orderFiles);
 }
 
 Settings::Settings(const Settings& settings) :
         Settings()
 {
-    this->copy(settings);
+    copy(settings);
 }
 
 Settings::~Settings()
@@ -37,130 +37,130 @@ Settings::~Settings()
 
 Settings& Settings::operator=(const Settings& settings)
 {
-    this->copy(settings);
+    copy(settings);
     return *this;
 }
 
 bool Settings::operator==(const Settings& settings) const
 {
-    return this->equals(settings);
+    return equals(settings);
 }
 
 bool Settings::operator!=(const Settings& settings) const
 {
-    return !this->equals(settings);
+    return !equals(settings);
 }
 
 const QString& Settings::getDataFilePath() const
 {
-    return this->dataFilePath;
+    return _dataFilePath;
 }
 
 const QString& Settings::getMP3FilesDirPath() const
 {
-    return this->mp3FilesDirPath;
+    return _mp3FilesDirPath;
 }
 
 const int& Settings::getBitRate() const
 {
-    return this->bitRate;
+    return _bitRate;
 }
 
 const bool& Settings::getEncodeFiles() const
 {
-    return this->encodeFiles;
+    return _encodeFiles;
 }
 
 const bool& Settings::getClearMetadata() const
 {
-    return this->clearMetadata;
+    return _clearMetadata;
 }
 
 const bool& Settings::getWriteMetadata() const
 {
-    return this->writeMetadata;
+    return _writeMetadata;
 }
 
 const bool& Settings::getOrderFiles() const
 {
-    return this->orderFiles;
+    return _orderFiles;
 }
 
 void Settings::setDataFilePath(const QString& dataFilePath)
 {
-    this->dataFilePath = dataFilePath;
+    _dataFilePath = dataFilePath;
 }
 
 void Settings::setMP3FilesDirPath(const QString& mp3FilesDirPath)
 {
-    this->mp3FilesDirPath = mp3FilesDirPath;
+    _mp3FilesDirPath = mp3FilesDirPath;
 }
 
 void Settings::setBitRate(const int& bitRate)
 {
-    this->bitRate = bitRate;
+    _bitRate = bitRate;
 }
 
 void Settings::setEncodeFiles(const bool& encodeFiles)
 {
-    this->encodeFiles = encodeFiles;
+    _encodeFiles = encodeFiles;
 }
 
 void Settings::setClearMetadata(const bool& clearMetadata)
 {
-    this->clearMetadata = clearMetadata;
+    _clearMetadata = clearMetadata;
 }
 
 void Settings::setWriteMetadata(const bool& writeMetadata)
 {
-    this->writeMetadata = writeMetadata;
+    _writeMetadata = writeMetadata;
 }
 
 void Settings::setOrderFiles(const bool& orderFiles)
 {
-    this->orderFiles = orderFiles;
+    _orderFiles = orderFiles;
 }
 
 void Settings::clear()
 {
-    this->set(QString(), QString(), 192, false, false, false, false);
+    set(QString(), QString(), 192, false, false, false, false);
 }
 
 void Settings::set(const QString& dataFilePath, const QString& mp3FilesDirPath, const int& bitRate,
         const bool& encodeFiles, const bool& clearMetadata, const bool& writeMetadata,
         const bool& orderFiles)
 {
-    this->setDataFilePath(dataFilePath);
-    this->setMP3FilesDirPath(mp3FilesDirPath);
-    this->setBitRate(bitRate);
-    this->setEncodeFiles(encodeFiles);
-    this->setClearMetadata(clearMetadata);
-    this->setWriteMetadata(writeMetadata);
-    this->setOrderFiles(orderFiles);
+    setDataFilePath(dataFilePath);
+    setMP3FilesDirPath(mp3FilesDirPath);
+    setBitRate(bitRate);
+    setEncodeFiles(encodeFiles);
+    setClearMetadata(clearMetadata);
+    setWriteMetadata(writeMetadata);
+    setOrderFiles(orderFiles);
 }
 
 void Settings::copy(const Settings& settings)
 {
-    this->set(settings.getDataFilePath(), settings.getMP3FilesDirPath(), settings.getBitRate(),
+    set(settings.getDataFilePath(), settings.getMP3FilesDirPath(), settings.getBitRate(),
             settings.getEncodeFiles(), settings.getClearMetadata(), settings.getWriteMetadata(),
             settings.getOrderFiles());
 }
 
 bool Settings::equals(const Settings& settings) const
 {
-    if (this->getDataFilePath() != settings.getDataFilePath())
+    if (getDataFilePath() != settings.getDataFilePath())
         return false;
-    if (this->getMP3FilesDirPath() != settings.getMP3FilesDirPath())
+    if (getMP3FilesDirPath() != settings.getMP3FilesDirPath())
         return false;
-    if (this->getBitRate() != settings.getBitRate())
+    if (getBitRate() != settings.getBitRate())
         return false;
-    if (this->getEncodeFiles() != settings.getEncodeFiles())
+    if (getEncodeFiles() != settings.getEncodeFiles())
         return false;
-    if (this->getClearMetadata() != settings.getClearMetadata())
+    if (getClearMetadata() != settings.getClearMetadata())
         return false;
-    if (this->getWriteMetadata() != settings.getWriteMetadata())
+    if (getWriteMetadata() != settings.getWriteMetadata())
         return false;
-    if (this->getOrderFiles() != settings.getOrderFiles())
+    if (getOrderFiles() != settings.getOrderFiles())
         return false;
     return true;
 }
@@ -170,24 +170,24 @@ void Settings::fromString(const QString& fromString, const QChar& sep)
     const QStringList fromStringList = fromString.split(sep);
     if (fromStringList.count() < 7)
         return;
-    this->setDataFilePath(fromStringList.at(0));
-    this->setMP3FilesDirPath(fromStringList.at(1));
-    this->setBitRate(fromStringList.at(2).toInt());
-    this->setEncodeFiles(static_cast<bool>(fromStringList.at(3).toInt()));
-    this->setClearMetadata(static_cast<bool>(fromStringList.at(4).toInt()));
-    this->setWriteMetadata(static_cast<bool>(fromStringList.at(5).toInt()));
-    this->setOrderFiles(static_cast<bool>(fromStringList.at(6).toInt()));
+    setDataFilePath(fromStringList.at(0));
+    setMP3FilesDirPath(fromStringList.at(1));
+    setBitRate(fromStringList.at(2).toInt());
+    setEncodeFiles(static_cast<bool>(fromStringList.at(3).toInt()));
+    setClearMetadata(static_cast<bool>(fromStringList.at(4).toInt()));
+    setWriteMetadata(static_cast<bool>(fromStringList.at(5).toInt()));
+    setOrderFiles(static_cast<bool>(fromStringList.at(6).toInt()));
 }
 
 const QString Settings::toString(const QChar& sep) const
 {
     QString toString;
-    toString += this->getDataFilePath() + sep;
-    toString += this->getMP3FilesDirPath() + sep;
-    toString += QString::number(this->getBitRate()) + sep;
-    toString += QString::number(static_cast<int>(this->getEncodeFiles())) + sep;
-    toString += QString::number(static_cast<int>(this->getClearMetadata())) + sep;
-    toString += QString::number(static_cast<int>(this->getWriteMetadata())) + sep;
-    toString += QString::number(static_cast<int>(this->getOrderFiles()));
+    toString += getDataFilePath() + sep;
+    toString += getMP3FilesDirPath() + sep;
+    toString += QString::number(getBitRate()) + sep;
+    toString += QString::number(static_cast<int>(getEncodeFiles())) + sep;
+    toString += QString::number(static_cast<int>(getClearMetadata())) + sep;
+    toString += QString::number(static_cast<int>(getWriteMetadata())) + sep;
+    toString += QString::number(static_cast<int>(getOrderFiles()));
     return toString;
 }

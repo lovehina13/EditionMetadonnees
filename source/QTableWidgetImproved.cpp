@@ -33,27 +33,27 @@ void QTableWidgetImproved::keyPressEvent(QKeyEvent* event)
 
     if (event->matches(QKeySequence::Delete))
     {
-        this->deleteEvent();
+        deleteEvent();
     }
     else if (event->matches(QKeySequence::Cut))
     {
-        this->cutEvent();
+        cutEvent();
     }
     else if (event->matches(QKeySequence::Copy))
     {
-        this->copyEvent();
+        copyEvent();
     }
     else if (event->matches(QKeySequence::Paste))
     {
-        this->pasteEvent();
+        pasteEvent();
     }
 //    else if (event->matches(QKeySequence::Undo))
 //    {
-//        this->undoEvent();
+//        undoEvent();
 //    }
 //    else if (event->matches(QKeySequence::Redo))
 //    {
-//        this->redoEvent();
+//        redoEvent();
 //    }
 }
 
@@ -85,8 +85,8 @@ void QTableWidgetImproved::deleteEvent()
 
 void QTableWidgetImproved::cutEvent()
 {
-    this->copyEvent();
-    this->deleteEvent();
+    copyEvent();
+    deleteEvent();
 }
 
 void QTableWidgetImproved::copyEvent()
@@ -144,8 +144,8 @@ void QTableWidgetImproved::copyEvent()
 
 void QTableWidgetImproved::pasteEvent()
 {
-    const int nbRows = this->rowCount();
-    const int nbColumns = this->columnCount();
+    const int nbRows = rowCount();
+    const int nbColumns = columnCount();
 
     const QClipboard* clipboard = QApplication::clipboard();
     const QString clipboardText = clipboard->text();

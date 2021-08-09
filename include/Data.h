@@ -58,8 +58,8 @@ public:
 
 private:
     // Class members
-    Settings settings;
-    MP3FilesPtrNamesMap mp3Files;
+    Settings _settings;
+    MP3FilesPtrNamesMap _mp3Files;
 };
 
 typedef Data* DataPtr;

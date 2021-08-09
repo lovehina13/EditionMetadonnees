@@ -59,13 +59,13 @@ public:
 
 private:
     // Class members
-    QString dataFilePath;
-    QString mp3FilesDirPath;
-    int bitRate;
-    bool encodeFiles;
-    bool clearMetadata;
-    bool writeMetadata;
-    bool orderFiles;
+    QString _dataFilePath;
+    QString _mp3FilesDirPath;
+    int _bitRate;
+    bool _encodeFiles;
+    bool _clearMetadata;
+    bool _writeMetadata;
+    bool _orderFiles;
 };
 
 typedef Settings* SettingsPtr;

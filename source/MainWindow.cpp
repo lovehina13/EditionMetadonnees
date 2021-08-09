@@ -20,109 +20,108 @@
 #include <QStringList>
 
 MainWindow::MainWindow(QWidget* parent) :
-        QMainWindow(parent), ui(new Ui::MainWindow)
+        QMainWindow(parent), _ui(new Ui::MainWindow)
 {
-    this->ui->setupUi(this);
+    _ui->setupUi(this);
 
-    this->ui->tableWidget->resizeColumnsToContents();
+    _ui->tableWidget->resizeColumnsToContents();
 }
 
 MainWindow::~MainWindow()
 {
-    delete this->ui;
+    delete _ui;
 }
 
 void MainWindow::createNewData()
 {
     const QString dirPath = QFileDialog::getExistingDirectory(this,
             QString::fromUtf8("Sélection d'un répertoire"),
-            this->data.getSettings().getMP3FilesDirPath());
+            _data.getSettings().getMP3FilesDirPath());
     if (dirPath.isEmpty())
         return;
 
-    this->clearTableWidget();
+    clearTableWidget();
 
     Settings settings;
     settings.setMP3FilesDirPath(dirPath);
-    this->data.setSettings(settings);
-    this->data.searchMP3Files();
+    _data.setSettings(settings);
+    _data.searchMP3Files();
 
-    this->updateTableWidget();
-    this->updateSettings();
+    updateTableWidget();
+    updateSettings();
 }
 
 void MainWindow::loadExistingData()
 {
     const QString filePath = QFileDialog::getOpenFileName(this,
             QString::fromUtf8("Sélection d'un fichier de métadonnées"),
-            this->data.getSettings().getDataFilePath(),
+            _data.getSettings().getDataFilePath(),
             QString::fromUtf8("Fichier de métadonnées (*.csv)"));
     if (filePath.isEmpty())
         return;
 
-    this->clearTableWidget();
+    clearTableWidget();
 
-    this->data.loadData(filePath);
+    _data.loadData(filePath);
 
-    this->updateTableWidget();
-    this->updateSettings();
+    updateTableWidget();
+    updateSettings();
 }
 
 void MainWindow::saveCurrentData()
 {
     const QString filePath = QFileDialog::getSaveFileName(this,
             QString::fromUtf8("Sélection d'un fichier de métadonnées"),
-            this->data.getSettings().getDataFilePath(),
+            _data.getSettings().getDataFilePath(),
             QString::fromUtf8("Fichier de métadonnées (*.csv)"));
     if (filePath.isEmpty())
         return;
 
-    this->data.saveData(filePath);
+    _data.saveData(filePath);
 }
 
 void MainWindow::processCurrentData()
 {
     // First step: clear metadata
-    if (this->ui->checkBoxClearMetadata->isChecked()
-            || this->ui->checkBoxWriteMetadata->isChecked())
+    if (_ui->checkBoxClearMetadata->isChecked() || _ui->checkBoxWriteMetadata->isChecked())
     {
-        this->data.clearMetadata();
+        _data.clearMetadata();
     }
 
     // Second step: re-encode files
-    if (this->ui->checkBoxEncodeFiles->isChecked())
+    if (_ui->checkBoxEncodeFiles->isChecked())
     {
-        this->data.encodeFiles(this->data.getSettings().getBitRate());
+        _data.encodeFiles(_data.getSettings().getBitRate());
     }
 
     // Third step: write metadata
-    if (this->ui->checkBoxWriteMetadata->isChecked())
+    if (_ui->checkBoxWriteMetadata->isChecked())
     {
-        this->data.encodeMetadata();
+        _data.encodeMetadata();
     }
 
     // Fourth step: re-order files
-    if (this->ui->checkBoxOrderFiles->isChecked())
+    if (_ui->checkBoxOrderFiles->isChecked())
     {
-        this->data.orderFiles(this->data.getSettings().getMP3FilesDirPath());
+        _data.orderFiles(_data.getSettings().getMP3FilesDirPath());
     }
 }
 
 void MainWindow::clearTableWidget()
 {
-    this->ui->tableWidget->clearContents();
-    this->ui->tableWidget->setRowCount(0);
-    this->ui->tableWidget->resizeColumnsToContents();
+    _ui->tableWidget->clearContents();
+    _ui->tableWidget->setRowCount(0);
+    _ui->tableWidget->resizeColumnsToContents();
 }
 
 void MainWindow::updateTableWidget()
 {
-    this->clearTableWidget();
+    clearTableWidget();
 
-    const MP3FilesPtrNamesMap& mp3Files = this->data.getMP3Files();
+    const MP3FilesPtrNamesMap& mp3Files = _data.getMP3Files();
     const QStringList mp3FilesPaths = mp3Files.keys();
     const int nbMP3Files = mp3Files.count();
-    this->ui->tableWidget->setRowCount(nbMP3Files);
+    _ui->tableWidget->setRowCount(nbMP3Files);
     for (int itMP3File = 0; itMP3File < nbMP3Files; itMP3File++)
     {
         const QString& mp3FilePath = mp3FilesPaths.at(itMP3File);
@@ -139,34 +138,34 @@ void MainWindow::updateTableWidget()
         dateItem->setData(Qt::DisplayRole, mp3File->getDate());
         discItem->setData(Qt::DisplayRole, mp3File->getDisc());
         trackItem->setData(Qt::DisplayRole, mp3File->getTrack());
-        this->ui->tableWidget->setItem(itMP3File, C_FILE_PATH, filePathItem);
-        this->ui->tableWidget->setItem(itMP3File, C_TITLE, titleItem);
-        this->ui->tableWidget->setItem(itMP3File, C_ARTIST, artistItem);
-        this->ui->tableWidget->setItem(itMP3File, C_ALBUM_ARTIST, albumArtistItem);
-        this->ui->tableWidget->setItem(itMP3File, C_ALBUM, albumItem);
-        this->ui->tableWidget->setItem(itMP3File, C_DATE, dateItem);
-        this->ui->tableWidget->setItem(itMP3File, C_DISC, discItem);
-        this->ui->tableWidget->setItem(itMP3File, C_TRACK, trackItem);
-        this->ui->tableWidget->setItem(itMP3File, C_GENRE, genreItem);
+        _ui->tableWidget->setItem(itMP3File, C_FILE_PATH, filePathItem);
+        _ui->tableWidget->setItem(itMP3File, C_TITLE, titleItem);
+        _ui->tableWidget->setItem(itMP3File, C_ARTIST, artistItem);
+        _ui->tableWidget->setItem(itMP3File, C_ALBUM_ARTIST, albumArtistItem);
+        _ui->tableWidget->setItem(itMP3File, C_ALBUM, albumItem);
+        _ui->tableWidget->setItem(itMP3File, C_DATE, dateItem);
+        _ui->tableWidget->setItem(itMP3File, C_DISC, discItem);
+        _ui->tableWidget->setItem(itMP3File, C_TRACK, trackItem);
+        _ui->tableWidget->setItem(itMP3File, C_GENRE, genreItem);
         filePathItem->setFlags(filePathItem->flags() ^ Qt::ItemIsEditable);
     }
-    this->ui->tableWidget->resizeColumnsToContents();
+    _ui->tableWidget->resizeColumnsToContents();
 }
 
 void MainWindow::updateSettings()
 {
-    const Settings& settings = this->data.getSettings();
-    this->ui->comboBoxBitRate->setCurrentIndex(settings.getBitRate() / 32 - 1);
-    this->ui->checkBoxEncodeFiles->setChecked(settings.getEncodeFiles());
-    this->ui->checkBoxClearMetadata->setChecked(settings.getClearMetadata());
-    this->ui->checkBoxWriteMetadata->setChecked(settings.getWriteMetadata());
-    this->ui->checkBoxOrderFiles->setChecked(settings.getOrderFiles());
+    const Settings& settings = _data.getSettings();
+    _ui->comboBoxBitRate->setCurrentIndex(settings.getBitRate() / 32 - 1);
+    _ui->checkBoxEncodeFiles->setChecked(settings.getEncodeFiles());
+    _ui->checkBoxClearMetadata->setChecked(settings.getClearMetadata());
+    _ui->checkBoxWriteMetadata->setChecked(settings.getWriteMetadata());
+    _ui->checkBoxOrderFiles->setChecked(settings.getOrderFiles());
 }
 
 void MainWindow::updateMP3File(const int& item, const int& metadata, const QVariant& value)
 {
-    const MP3FilesPtrNamesMap& mp3Files = this->data.getMP3Files();
-    const QString mp3FilePath = this->ui->tableWidget->item(item, C_FILE_PATH)->text();
+    const MP3FilesPtrNamesMap& mp3Files = _data.getMP3Files();
+    const QString mp3FilePath = _ui->tableWidget->item(item, C_FILE_PATH)->text();
     const MP3FilePtr mp3File = mp3Files.value(mp3FilePath);
     if (metadata == C_TITLE)
     {
@@ -204,27 +203,27 @@ void MainWindow::updateMP3File(const int& item, const int& metadata, const QVari
 
 void MainWindow::on_actionNew_triggered()
 {
-    this->createNewData();
+    createNewData();
 }
 
 void MainWindow::on_actionLoad_triggered()
 {
-    this->loadExistingData();
+    loadExistingData();
 }
 
 void MainWindow::on_actionSave_triggered()
 {
-    this->saveCurrentData();
+    saveCurrentData();
 }
 
 void MainWindow::on_actionProcess_triggered()
 {
-    this->processCurrentData();
+    processCurrentData();
 }
 
 void MainWindow::on_actionQuit_triggered()
 {
-    this->close();
+    close();
 }
 
 void MainWindow::on_actionDocumentation_triggered()
@@ -256,42 +255,42 @@ void MainWindow::on_tableWidget_itemChanged(QTableWidgetItem* item)
         item->setData(Qt::DisplayRole, value.toDate());
     }
 
-    this->updateMP3File(row, column, value);
+    updateMP3File(row, column, value);
 
-    this->ui->tableWidget->resizeColumnsToContents();
+    _ui->tableWidget->resizeColumnsToContents();
 }
 
 void MainWindow::on_comboBoxBitRate_currentIndexChanged()
 {
-    Settings settings = this->data.getSettings();
-    settings.setBitRate((this->ui->comboBoxBitRate->currentIndex() + 1) * 32);
-    this->data.setSettings(settings);
+    Settings settings = _data.getSettings();
+    settings.setBitRate((_ui->comboBoxBitRate->currentIndex() + 1) * 32);
+    _data.setSettings(settings);
 }
 
 void MainWindow::on_checkBoxEncodeFiles_stateChanged()
 {
-    Settings settings = this->data.getSettings();
-    settings.setEncodeFiles(this->ui->checkBoxEncodeFiles->isChecked());
-    this->data.setSettings(settings);
+    Settings settings = _data.getSettings();
+    settings.setEncodeFiles(_ui->checkBoxEncodeFiles->isChecked());
+    _data.setSettings(settings);
 }
 
 void MainWindow::on_checkBoxClearMetadata_stateChanged()
 {
-    Settings settings = this->data.getSettings();
-    settings.setClearMetadata(this->ui->checkBoxClearMetadata->isChecked());
-    this->data.setSettings(settings);
+    Settings settings = _data.getSettings();
+    settings.setClearMetadata(_ui->checkBoxClearMetadata->isChecked());
+    _data.setSettings(settings);
 }
 
 void MainWindow::on_checkBoxWriteMetadata_stateChanged()
 {
-    Settings settings = this->data.getSettings();
-    settings.setWriteMetadata(this->ui->checkBoxWriteMetadata->isChecked());
-    this->data.setSettings(settings);
+    Settings settings = _data.getSettings();
+    settings.setWriteMetadata(_ui->checkBoxWriteMetadata->isChecked());
+    _data.setSettings(settings);
 }
 
 void MainWindow::on_checkBoxOrderFiles_stateChanged()
 {
-    Settings settings = this->data.getSettings();
-    settings.setOrderFiles(this->ui->checkBoxOrderFiles->isChecked());
-    this->data.setSettings(settings);
+    Settings settings = _data.getSettings();
+    settings.setOrderFiles(_ui->checkBoxOrderFiles->isChecked());
+    _data.setSettings(settings);
 }
