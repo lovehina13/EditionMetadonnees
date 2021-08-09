@@ -18,10 +18,10 @@ class QTableWidgetImproved : public QTableWidget
 
 public:
     explicit QTableWidgetImproved(QWidget* parent = nullptr);
-    virtual ~QTableWidgetImproved();
+    virtual ~QTableWidgetImproved() override;
 
 protected:
-    virtual void keyPressEvent(QKeyEvent* event);
+    virtual void keyPressEvent(QKeyEvent* event) override;
     virtual void deleteEvent();
     virtual void cutEvent();
     virtual void copyEvent();

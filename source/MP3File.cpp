@@ -258,10 +258,10 @@ void MP3File::encodeFile(const int& bitRate) const
 {
     const QString& inFilePath = getFilePath();
     const QString outFilePath = QString("%1.out.mp3").arg(inFilePath);
-    const QString command =
-            QString("ffmpeg -y -i \"%1\" -map 0:0 -c:a libmp3lame -b:a %2k \"%3\"").arg(inFilePath,
-                    QString::number(bitRate), outFilePath);
-    executeCommand(command, true);
+    const QString program = QString("ffmpeg");
+    const QString arguments = QString("-y -i \"%1\" -map 0:0 -c:a libmp3lame -b:a %2k \"%3\"").arg(
+            inFilePath, QString::number(bitRate), outFilePath);
+    executeCommand(program, arguments.split(" "), true);
     QFile::remove(inFilePath);
     QFile::rename(outFilePath, inFilePath);
 }
@@ -270,9 +270,10 @@ void MP3File::clearMetadata() const
 {
     const QString& inFilePath = getFilePath();
     const QString outFilePath = QString("%1.out.mp3").arg(inFilePath);
-    const QString command = QString("ffmpeg -y -i \"%1\" -map_metadata -1 -c:a copy \"%2\"").arg(
+    const QString program = QString("ffmpeg");
+    const QString arguments = QString("-y -i \"%1\" -map_metadata -1 -c:a copy \"%2\"").arg(
             inFilePath, outFilePath);
-    executeCommand(command, true);
+    executeCommand(program, arguments.split(" "), true);
     QFile::remove(inFilePath);
     QFile::rename(outFilePath, inFilePath);
 }
@@ -281,9 +282,10 @@ void MP3File::decodeMetadata()
 {
     const QString& inFilePath = getFilePath();
     const QString outFilePath = QString("%1.out.txt").arg(inFilePath);
-    const QString command = QString("ffmpeg -y -i \"%1\" -f ffmetadata \"%2\"").arg(inFilePath,
+    const QString program = QString("ffmpeg");
+    const QString arguments = QString("-y -i \"%1\" -f ffmetadata \"%2\"").arg(inFilePath,
             outFilePath);
-    executeCommand(command, true);
+    executeCommand(program, arguments.split(" "), true);
 
     const QStringList lines = readFileLines(outFilePath);
     const int nbLines = lines.count();
@@ -354,9 +356,10 @@ void MP3File::encodeMetadata() const
 
     const QString& inFilePath = getFilePath();
     const QString outFilePath = QString("%1.out.mp3").arg(inFilePath);
-    const QString command = QString("ffmpeg -y -i \"%1\" %2 -c:a copy \"%3\"").arg(inFilePath,
-            metadata, outFilePath);
-    executeCommand(command, true);
+    const QString program = QString("ffmpeg");
+    const QString arguments = QString("-y -i \"%1\" %2 -c:a copy \"%3\"").arg(inFilePath, metadata,
+            outFilePath);
+    executeCommand(program, arguments.split(" "), true);
     QFile::remove(inFilePath);
     QFile::rename(outFilePath, inFilePath);
 }

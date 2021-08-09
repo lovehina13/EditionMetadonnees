@@ -98,14 +98,14 @@ bool Data::equals(const Data& data) const
 void Data::fromString(const QString& fromString, const QChar& sep)
 {
     // TODO void Data::fromString(const QString& fromString, const QChar& sep)
-    Q_UNUSED(fromString);
-    Q_UNUSED(sep);
+    Q_UNUSED(fromString)
+    Q_UNUSED(sep)
 }
 
 const QString Data::toString(const QChar& sep) const
 {
     // TODO const QString Data::toString(const QChar& sep) const
-    Q_UNUSED(sep);
+    Q_UNUSED(sep)
     return QString();
 }
 

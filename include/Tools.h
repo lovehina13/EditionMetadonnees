@@ -11,7 +11,7 @@
 #include <QString>
 #include <QStringList>
 
-int executeCommand(const QString& command, const bool& log = false);
+int executeCommand(const QString& program, const QStringList& arguments, const bool& log = false);
 const QStringList readFileLines(const QString& filePath);
 void writeFileLines(const QString& filePath, const QStringList& lines);
 void removeDirectory(const QString& dirPath);
