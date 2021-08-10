@@ -11,43 +11,9 @@
 #include <QDirIterator>
 #include <QStringList>
 
-Data::Data() :
-        _settings(Settings()), _mp3Files(MP3FilesPtrNamesMap())
-{
-    clear();
-}
-
 Data::Data(const Settings& settings, const MP3FilesPtrNamesMap& mp3Files) :
-        Data()
+        _settings(settings), _mp3Files(mp3Files)
 {
-    set(settings, mp3Files);
-}
-
-Data::Data(const Data& data) :
-        Data()
-{
-    copy(data);
-}
-
-Data::~Data()
-{
-    clearMP3Files();
-}
-
-Data& Data::operator=(const Data& data)
-{
-    copy(data);
-    return *this;
-}
-
-bool Data::operator==(const Data& data) const
-{
-    return equals(data);
-}
-
-bool Data::operator!=(const Data& data) const
-{
-    return !equals(data);
 }
 
 const Settings& Data::getSettings() const
@@ -72,27 +38,13 @@ void Data::setMP3Files(const MP3FilesPtrNamesMap& mp3Files)
 
 void Data::clear()
 {
-    set(Settings(), MP3FilesPtrNamesMap());
+    *this = Data();
 }
 
 void Data::set(const Settings& settings, const MP3FilesPtrNamesMap& mp3Files)
 {
     setSettings(settings);
     setMP3Files(mp3Files);
-}
-
-void Data::copy(const Data& data)
-{
-    set(data.getSettings(), data.getMP3Files());
-}
-
-bool Data::equals(const Data& data) const
-{
-    if (getSettings() != data.getSettings())
-        return false;
-    if (getMP3Files() != data.getMP3Files())
-        return false;
-    return true;
 }
 
 void Data::fromString(const QString& fromString, const QChar& sep)

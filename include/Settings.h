@@ -17,17 +17,14 @@ class Settings
 {
 public:
     // Constructors and destructors
-    Settings();
+    Settings() = default;
     Settings(const QString& dataFilePath, const QString& mp3FilesDirPath, const int& bitRate,
             const bool& encodeFiles, const bool& clearMetadata, const bool& writeMetadata,
             const bool& orderFiles);
-    Settings(const Settings& settings);
-    virtual ~Settings();
 
     // Operators
-    Settings& operator=(const Settings& settings);
-    bool operator==(const Settings& settings) const;
-    bool operator!=(const Settings& settings) const;
+    bool operator==(const Settings& settings) const = default;
+    bool operator!=(const Settings& settings) const = default;
 
     // Getters
     const QString& getDataFilePath() const;
@@ -52,8 +49,6 @@ public:
     void set(const QString& dataFilePath, const QString& mp3FilesDirPath, const int& bitRate,
             const bool& encodeFiles, const bool& clearMetadata, const bool& writeMetadata,
             const bool& orderFiles);
-    void copy(const Settings& settings);
-    bool equals(const Settings& settings) const;
     void fromString(const QString& fromString, const QChar& sep);
     const QString toString(const QChar& sep) const;
 
@@ -61,19 +56,19 @@ private:
     // Class members
     QString _dataFilePath;
     QString _mp3FilesDirPath;
-    int _bitRate;
-    bool _encodeFiles;
-    bool _clearMetadata;
-    bool _writeMetadata;
-    bool _orderFiles;
+    int _bitRate { 192 };
+    bool _encodeFiles { false };
+    bool _clearMetadata { false };
+    bool _writeMetadata { false };
+    bool _orderFiles { false };
 };
 
-typedef Settings* SettingsPtr;
-typedef QList<Settings> SettingsList;
-typedef QList<SettingsPtr> SettingsPtrList;
-typedef QMap<int, Settings> SettingsIdMap;
-typedef QMap<int, SettingsPtr> SettingsPtrIdMap;
-typedef QMap<QString, Settings> SettingsNamesMap;
-typedef QMap<QString, SettingsPtr> SettingsPtrNamesMap;
+using SettingsPtr = Settings*;
+using SettingsList = QList<Settings>;
+using SettingsPtrList = QList<SettingsPtr>;
+using SettingsIdMap = QMap<int, Settings>;
+using SettingsPtrIdMap = QMap<int, SettingsPtr>;
+using SettingsNamesMap = QMap<QString, Settings>;
+using SettingsPtrNamesMap = QMap<QString, SettingsPtr>;
 
 #endif /* SETTINGS_H */

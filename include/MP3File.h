@@ -18,17 +18,14 @@ class MP3File
 {
 public:
     // Constructors and destructors
-    MP3File();
+    MP3File() = default;
     MP3File(const QString& filePath, const QString& title, const QString& artist,
             const QString& albumArtist, const QString& album, const QDate& date, const int& disc,
             const int& track, const QString& genre);
-    MP3File(const MP3File& mp3File);
-    virtual ~MP3File();
 
     // Operators
-    MP3File& operator=(const MP3File& mp3File);
-    bool operator==(const MP3File& mp3File) const;
-    bool operator!=(const MP3File& mp3File) const;
+    bool operator==(const MP3File& mp3File) const = default;
+    bool operator!=(const MP3File& mp3File) const = default;
 
     // Getters
     const QString& getFilePath() const;
@@ -57,8 +54,6 @@ public:
     void set(const QString& filePath, const QString& title, const QString& artist,
             const QString& albumArtist, const QString& album, const QDate& date, const int& disc,
             const int& track, const QString& genre);
-    void copy(const MP3File& mp3File);
-    bool equals(const MP3File& mp3File) const;
     void fromString(const QString& fromString, const QChar& sep);
     const QString toString(const QChar& sep) const;
 
@@ -83,17 +78,17 @@ private:
     QString _albumArtist;
     QString _album;
     QDate _date;
-    int _disc;
-    int _track;
+    int _disc { 0 };
+    int _track { 0 };
     QString _genre;
 };
 
-typedef MP3File* MP3FilePtr;
-typedef QList<MP3File> MP3FilesList;
-typedef QList<MP3FilePtr> MP3FilesPtrList;
-typedef QMap<int, MP3File> MP3FilesIdMap;
-typedef QMap<int, MP3FilePtr> MP3FilesPtrIdMap;
-typedef QMap<QString, MP3File> MP3FilesNamesMap;
-typedef QMap<QString, MP3FilePtr> MP3FilesPtrNamesMap;
+using MP3FilePtr = MP3File*;
+using MP3FilesList = QList<MP3File>;
+using MP3FilesPtrList = QList<MP3FilePtr>;
+using MP3FilesIdMap = QMap<int, MP3File>;
+using MP3FilesPtrIdMap = QMap<int, MP3FilePtr>;
+using MP3FilesNamesMap = QMap<QString, MP3File>;
+using MP3FilesPtrNamesMap = QMap<QString, MP3FilePtr>;
 
 #endif /* MP3FILE_H */

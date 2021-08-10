@@ -53,13 +53,13 @@ protected slots:
     void on_checkBoxOrderFiles_stateChanged();
 
 private:
-    Ui::MainWindow* _ui;
-    Data _data;
-
-    enum tableWidgetColumns
+    enum TableWidgetColumns
     {
         C_FILE_PATH, C_TITLE, C_ARTIST, C_ALBUM_ARTIST, C_ALBUM, C_DATE, C_DISC, C_TRACK, C_GENRE
     };
+
+    Ui::MainWindow* _ui { nullptr };
+    Data _data;
 };
 
 #endif /* MAINWINDOW_H */

@@ -11,46 +11,12 @@
 #include <QFile>
 #include <QStringList>
 
-MP3File::MP3File() :
-        _filePath(QString()), _title(QString()), _artist(QString()), _albumArtist(QString()),
-                _album(QString()), _date(QDate()), _disc(0), _track(0), _genre(QString())
-{
-    clear();
-}
-
 MP3File::MP3File(const QString& filePath, const QString& title, const QString& artist,
         const QString& albumArtist, const QString& album, const QDate& date, const int& disc,
         const int& track, const QString& genre) :
-        MP3File()
+        _filePath(filePath), _title(title), _artist(artist), _albumArtist(albumArtist),
+                _album(album), _date(date), _disc(disc), _track(track), _genre(genre)
 {
-    set(filePath, title, artist, albumArtist, album, date, disc, track, genre);
-}
-
-MP3File::MP3File(const MP3File& mp3File) :
-        MP3File()
-{
-    copy(mp3File);
-}
-
-MP3File::~MP3File()
-{
-
-}
-
-MP3File& MP3File::operator=(const MP3File& mp3File)
-{
-    copy(mp3File);
-    return *this;
-}
-
-bool MP3File::operator==(const MP3File& mp3File) const
-{
-    return equals(mp3File);
-}
-
-bool MP3File::operator!=(const MP3File& mp3File) const
-{
-    return !equals(mp3File);
 }
 
 const QString& MP3File::getFilePath() const
@@ -145,7 +111,7 @@ void MP3File::setGenre(const QString& genre)
 
 void MP3File::clear()
 {
-    set(QString(), QString(), QString(), QString(), QString(), QDate(), 0, 0, QString());
+    *this = MP3File();
 }
 
 void MP3File::set(const QString& filePath, const QString& title, const QString& artist,
@@ -161,36 +127,6 @@ void MP3File::set(const QString& filePath, const QString& title, const QString& 
     setDisc(disc);
     setTrack(track);
     setGenre(genre);
-}
-
-void MP3File::copy(const MP3File& mp3File)
-{
-    set(mp3File.getFilePath(), mp3File.getTitle(), mp3File.getArtist(), mp3File.getAlbumArtist(),
-            mp3File.getAlbum(), mp3File.getDate(), mp3File.getDisc(), mp3File.getTrack(),
-            mp3File.getGenre());
-}
-
-bool MP3File::equals(const MP3File& mp3File) const
-{
-    if (getFilePath() != mp3File.getFilePath())
-        return false;
-    if (getTitle() != mp3File.getTitle())
-        return false;
-    if (getArtist() != mp3File.getArtist())
-        return false;
-    if (getAlbumArtist() != mp3File.getAlbumArtist())
-        return false;
-    if (getAlbum() != mp3File.getAlbum())
-        return false;
-    if (getDate() != mp3File.getDate())
-        return false;
-    if (getDisc() != mp3File.getDisc())
-        return false;
-    if (getTrack() != mp3File.getTrack())
-        return false;
-    if (getGenre() != mp3File.getGenre())
-        return false;
-    return true;
 }
 
 void MP3File::fromString(const QString& fromString, const QChar& sep)
