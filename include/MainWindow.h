@@ -46,11 +46,11 @@ protected slots:
     void on_actionDocumentation_triggered();
     void on_actionAbout_triggered();
     void on_tableWidget_itemChanged(QTableWidgetItem* item);
-    void on_comboBoxBitRate_currentIndexChanged();
-    void on_checkBoxEncodeFiles_stateChanged();
-    void on_checkBoxClearMetadata_stateChanged();
-    void on_checkBoxWriteMetadata_stateChanged();
-    void on_checkBoxOrderFiles_stateChanged();
+    void on_comboBoxBitRate_currentIndexChanged(int index);
+    void on_checkBoxEncodeFiles_stateChanged(int state);
+    void on_checkBoxClearMetadata_stateChanged(int state);
+    void on_checkBoxWriteMetadata_stateChanged(int state);
+    void on_checkBoxOrderFiles_stateChanged(int state);
 
 private:
     enum TableWidgetColumns

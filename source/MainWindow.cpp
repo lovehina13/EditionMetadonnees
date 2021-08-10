@@ -260,37 +260,37 @@ void MainWindow::on_tableWidget_itemChanged(QTableWidgetItem* item)
     _ui->tableWidget->resizeColumnsToContents();
 }
 
-void MainWindow::on_comboBoxBitRate_currentIndexChanged()
+void MainWindow::on_comboBoxBitRate_currentIndexChanged(int index)
 {
     Settings settings = _data.getSettings();
-    settings.setBitRate((_ui->comboBoxBitRate->currentIndex() + 1) * 32);
+    settings.setBitRate((index + 1) * 32);
     _data.setSettings(settings);
 }
 
-void MainWindow::on_checkBoxEncodeFiles_stateChanged()
+void MainWindow::on_checkBoxEncodeFiles_stateChanged(int state)
 {
     Settings settings = _data.getSettings();
-    settings.setEncodeFiles(_ui->checkBoxEncodeFiles->isChecked());
+    settings.setEncodeFiles(state == Qt::Checked);
     _data.setSettings(settings);
 }
 
-void MainWindow::on_checkBoxClearMetadata_stateChanged()
+void MainWindow::on_checkBoxClearMetadata_stateChanged(int state)
 {
     Settings settings = _data.getSettings();
-    settings.setClearMetadata(_ui->checkBoxClearMetadata->isChecked());
+    settings.setClearMetadata(state == Qt::Checked);
     _data.setSettings(settings);
 }
 
-void MainWindow::on_checkBoxWriteMetadata_stateChanged()
+void MainWindow::on_checkBoxWriteMetadata_stateChanged(int state)
 {
     Settings settings = _data.getSettings();
-    settings.setWriteMetadata(_ui->checkBoxWriteMetadata->isChecked());
+    settings.setWriteMetadata(state == Qt::Checked);
     _data.setSettings(settings);
 }
 
-void MainWindow::on_checkBoxOrderFiles_stateChanged()
+void MainWindow::on_checkBoxOrderFiles_stateChanged(int state)
 {
     Settings settings = _data.getSettings();
-    settings.setOrderFiles(_ui->checkBoxOrderFiles->isChecked());
+    settings.setOrderFiles(state == Qt::Checked);
     _data.setSettings(settings);
 }
